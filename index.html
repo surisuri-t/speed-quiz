@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>초강력 스피드 게임</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 나눔스퀘어 (기본 가독성용) */
+        @import url('https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css');
+        
+        /* 주아체 및 나눔고딕 (구글 폰트) */
+        @import url('https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+        /* 에이투지체 및 카페24 써라운드 (기존 유지) */
+        @font-face {
+            font-family: 'Cafe24Ssurround';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'AtoZ';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/AtoZ.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* 카페24슈퍼매직 */
+        @font-face {
+            font-family: 'Cafe24Supermagic-Bold-v1.0';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231024@1.0/Cafe24Supermagic-Bold-v1.0.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+        
+        body {
+            font-family: 'NanumSquare', sans-serif;
+            background: #022c22; /* emerald-950 */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* 폰트 클래스 정의 */
+        .font-jua { font-family: 'Jua', sans-serif; }
+        .font-nanum-gothic { font-family: 'Nanum Gothic', sans-serif; }
+        .font-atoz { font-family: 'AtoZ', sans-serif; }
+        .font-cafe24 { font-family: 'Cafe24Ssurround', sans-serif; }
+        .font-cafe24-magic { font-family: 'Cafe24Supermagic-Bold-v1.0', sans-serif; }
+
+        .font-black { 
+            font-family: 'NanumSquare', sans-serif; 
+            font-weight: 800;
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #064e3b; /* emerald-900 */
+            border-radius: 10px;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.39.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-gradient-to-br from-emerald-950 via-teal-950 to-emerald-900 min-h-screen text-slate-100">
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

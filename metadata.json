@@ -1,0 +1,7 @@
+{
+  "name": "스피드 퀴즈 (Speed Quiz)",
+  "description": "다양한 카테고리와 난이도로 즐기는 박진감 넘치는 스피드 퀴즈 게임입니다. 5초 안에 힌트를 보고 정답을 맞춰보세요!",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
