@@ -2,14 +2,46 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { Question, HintDifficulty } from "../types";
 
-// Always use const ai = new GoogleGenAI({apiKey: process.env.API_KEY});
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// 저장된 API Key를 가져오는 헬퍼 함수
+const getEffectiveApiKey = (): string => {
+  try {
+    const saved = localStorage.getItem('user_gemini_api_key');
+    if (saved) {
+      return atob(saved); // 저장 시 btoa로 인코딩된 값을 디코딩
+    }
+  } catch (e) {
+    console.error("Failed to decode saved API key", e);
+  }
+  return process.env.API_KEY || '';
+};
+
+// API Key 유효성 테스트 함수
+export const testApiKey = async (tempKey: string): Promise<boolean> => {
+  try {
+    const testAi = new GoogleGenAI({ apiKey: tempKey });
+    const response = await testAi.models.generateContent({
+      model: "gemini-3-flash-preview",
+      contents: "Hi, simple test. respond with only 'OK'.",
+    });
+    return response.text?.includes('OK') || false;
+  } catch (error) {
+    console.error("API Key Test Failed:", error);
+    return false;
+  }
+};
 
 export const fetchQuestions = async (
   category: string, 
   count: number, 
   difficulty: HintDifficulty
 ): Promise<Question[]> => {
+  const apiKey = getEffectiveApiKey();
+  if (!apiKey) {
+    throw new Error("API_KEY_MISSING");
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
+
   const difficultyPrompt = {
     '쉬움': '초등학생도 바로 맞출 수 있을 정도로 아주 쉽고 직관적이며 명확한 힌트를 제공해줘.',
     '보통': '일반적인 상식을 가진 성인이 생각하면 맞출 수 있는 적절한 수준의 힌트를 제공해줘.',
@@ -39,7 +71,6 @@ export const fetchQuestions = async (
       },
     });
 
-    // The GenerateContentResponse object features a text property (not a method, so do not call text())
     if (!response.text) {
       throw new Error("No content received from Gemini");
     }
@@ -47,9 +78,6 @@ export const fetchQuestions = async (
     return JSON.parse(response.text.trim());
   } catch (error) {
     console.error("Error fetching questions:", error);
-    return Array(count).fill(null).map((_, i) => ({
-      word: `오류 ${i + 1}`,
-      hint: "데이터를 불러오는 중 오류가 발생했습니다. 다시 시도해 주세요."
-    }));
+    throw error;
   }
 };

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { CATEGORIES, LEVEL_CONFIG, Level, HintDifficulty, GameMode, TimerOption } from '../types';
+import SettingsModal from './SettingsModal';
 
 interface HomeProps {
   onStartGame: (category: string, level: Level, difficulty: HintDifficulty, mode: GameMode, timer: TimerOption) => void;
@@ -13,22 +14,32 @@ const Home: React.FC<HomeProps> = ({ onStartGame, onViewRanking }) => {
   const [selectedDifficulty, setSelectedDifficulty] = React.useState<HintDifficulty>('보통');
   const [selectedMode, setSelectedMode] = React.useState<GameMode>('싱글');
   const [selectedTimer, setSelectedTimer] = React.useState<TimerOption>(5);
+  const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
 
   return (
-    <div className="flex flex-col items-center justify-center p-8 bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-2xl max-w-3xl w-full mx-auto animate-in fade-in duration-700 border border-emerald-900/50">
+    <div className="flex flex-col items-center justify-center p-8 bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-2xl max-w-3xl w-full mx-auto animate-in fade-in duration-700 border border-emerald-900/50 relative">
       <div className="flex justify-between w-full items-start mb-8">
         <div className="flex-1">
           <h1 className="text-6xl font-jua text-emerald-400 drop-shadow-[0_2px_10px_rgba(52,211,153,0.3)]">
             스피드 퀴즈
           </h1>
         </div>
-        <button 
-          onClick={onViewRanking}
-          className="bg-emerald-900/40 hover:bg-emerald-800/60 p-4 rounded-full text-emerald-400 transition-colors border border-emerald-700/30"
-          title="랭킹 보기"
-        >
-          <i className="fas fa-trophy text-3xl text-amber-500"></i>
-        </button>
+        <div className="flex gap-2">
+          <button 
+            onClick={() => setIsSettingsOpen(true)}
+            className="bg-emerald-900/40 hover:bg-emerald-800/60 p-4 rounded-full text-emerald-400 transition-colors border border-emerald-700/30"
+            title="설정"
+          >
+            <i className="fas fa-cog text-3xl"></i>
+          </button>
+          <button 
+            onClick={onViewRanking}
+            className="bg-emerald-900/40 hover:bg-emerald-800/60 p-4 rounded-full text-emerald-400 transition-colors border border-emerald-700/30"
+            title="랭킹 보기"
+          >
+            <i className="fas fa-trophy text-3xl text-amber-500"></i>
+          </button>
+        </div>
       </div>
       
       <div className="w-full space-y-8">
@@ -149,6 +160,8 @@ const Home: React.FC<HomeProps> = ({ onStartGame, onViewRanking }) => {
           게임 시작!
         </button>
       </div>
+
+      {isSettingsOpen && <SettingsModal onClose={() => setIsSettingsOpen(false)} />}
     </div>
   );
 };

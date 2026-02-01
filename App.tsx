@@ -53,9 +53,13 @@ const App: React.FC = () => {
       const qs = await fetchQuestions(selectedCat, count, selectedDiff);
       setQuestions(qs);
       setView('GAME');
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert('문제를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
+      if (err.message === "API_KEY_MISSING") {
+        alert('API Key가 설정되어 있지 않습니다. 메인 화면의 [설정] 아이콘을 눌러 키를 입력해주세요.');
+      } else {
+        alert('문제를 가져오는데 실패했습니다. API Key가 유효한지 확인해주세요.');
+      }
       setView('HOME');
     }
   };
